@@ -1,0 +1,17 @@
+{% extends 'our_template.html'%}
+
+
+
+
+
+{% block content %}
+
+<h1>Post with "{{tag.title|title}}" </h1>
+
+{% for post in tag.posts.all %}
+
+{% include 'blog/includes/post_card_tmp.html' %}
+
+{% endfor %}
+
+{% endblock %}

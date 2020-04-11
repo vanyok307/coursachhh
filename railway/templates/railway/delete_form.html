@@ -1,0 +1,12 @@
+{%extends 'our_template.html'%}
+
+
+{%block content%}
+<form action="{{post.get_clear_url}}" method="post">
+	{%csrf_token%}
+	
+<h1>Want to delete this?</h1>
+<button href="{{Post.get_absolute_url}}"type="submit" class="btn btn-primary">DELETE</button>
+<button  href="{{Post.get_absolute_url}}" type="submit" class="btn btn-danger">NO</button>
+</form>
+{%endblock%}
