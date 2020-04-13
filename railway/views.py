@@ -37,6 +37,16 @@ def start_page(request):
     return render(request,'railway/start_page.html', context= context)
 
 class TrainView(View):
-    model = WayForm
+    model = Way
     template = 'railway/post_create_form.html'
     raise_exception=True
+
+    def get(self,request,id):
+        try:
+            object = Way.objects.get(id=id)
+            context = {
+                'ways' : object,
+                        }
+            return render(request,'railway/way_page.html', context=context)
+        except Way.DoesNotExist:
+            return start_page(request)
