@@ -6,20 +6,18 @@ from time import time
 
 
 class Train(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20,unique=True)
 
 #головна модель, яку будемо використовувати для вього
 class Way(models.Model):
-    name=models.CharField(max_length=150,db_index=True)
-    first_station=models.ForeignKey("Station",blank=False)
+    name=models.CharField(max_length=150,unique=True)
     train=models.ForeignKey("Train",
-            models=on_delete.SET_DEFAULT,default=None,
+            on_delete=models.SET_DEFAULT,default=None,
             to_field="name",null=True,blank=False)
-    stations = models.ManyToMayField("Station")
-    final_station=models.ForeignKey("Station",blank=False)
+    stations = models.ManyToManyField("Station")
 
 class Station(models.Model):
-    station_name=models.CharField(max_length=32)
+    station_name=models.CharField(max_length=32,unique=True)
     departure=models.DateTimeField(auto_now=False,blank=False)
     arival=models.DateTimeField(auto_now=False,blank=False)
 
@@ -27,7 +25,7 @@ class Ticket(models.Model):
     number=models.CharField(max_length=20)
     price = models.IntegerField()
     date_purchase=models.DateTimeField(auto_now=True)
-    destination=models.ForeignKey("Way",to_field="final_station",blank=False)
+    destination=models.ForeignKey("Way",on_delete=models.SET_DEFAULT,default=None,null=True,to_field="name",blank=False)
 
     #функція для підготовки квитка до завантаження
     def get_ticket_info_text(self):
