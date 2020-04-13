@@ -20,8 +20,8 @@ class Way(models.Model):
 
 class Station(models.Model):
     station_name=models.CharField(max_length=32)
-    departure=models.DateTimeField(auto_now=False)
-    arival=models.DateTimeField(auto_now=False,blank=True)
+    departure=models.DateTimeField(auto_now=False,blank=False)
+    arival=models.DateTimeField(auto_now=False,blank=False)
 
 class Ticket(models.Model):
     number=models.CharField(max_length=20)
