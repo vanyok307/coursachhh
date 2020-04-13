@@ -5,37 +5,30 @@ from time import time
 # Create your models here.
 
 
-def gen_slug(s):
-    new_slug = slugify(s,allow_unicode=True)
-    return new_slug + '-' + str(int(time()))
+class Train(models.Model):
+    name = models.CharField(max_length=20)
 
-
-
-
-
+#головна модель, яку будемо використовувати для вього
 class Way(models.Model):
     name=models.CharField(max_length=150,db_index=True)
-    first_station=models.CharField(max_length=150,unique=False)
-    train_number=models.CharField(blank=True,max_length=150,unique=True)
-    to=models.TextField(blank=True,db_index=False)
-    date_out=models.DateTimeField(auto_now=False)
+    first_station=models.ForeignKey("Station",blank=False)
+    train=models.ForeignKey("Train",
+            models=on_delete.SET_DEFAULT,default=None,
+            to_field="name",null=True,blank=False)
+    stations = models.ManyToMayField("Station")
+    final_station=models.ForeignKey("Station",blank=False)
 
-"""
-    def get_absolute_url(self):
-        return reverse('post_detail', kwargs={'slug':self.slug})
+class Station(models.Model):
+    station_name=models.CharField(max_length=32)
+    departure=models.DateTimeField(auto_now=False)
+    arival=models.DateTimeField(auto_now=False,blank=True)
 
-    def get_edit_url(self):                         
-        return reverse('post_edit',kwargs={'slug':self.slug})
+class Ticket(models.Model):
+    number=models.CharField(max_length=20)
+    price = models.IntegerField()
+    date_purchase=models.DateTimeField(auto_now=True)
+    destination=models.ForeignKey("Way",to_field="final_station",blank=False)
 
-    def get_clear_url(self):
-        return reverse('post_clear',kwargs={'slug':self.slug})
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.slug = gen_slug(self.title)
-        super().save(*args,**kwargs)
-        return 
-
-    def __str__(self):
-        return self.title
-"""
+    #функція для підготовки квитка до завантаження
+    def get_ticket_info_text(self):
+        pass
