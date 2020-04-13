@@ -15,7 +15,7 @@ def gen_slug(s):
 
 class Way(models.Model):
     name=models.CharField(max_length=150,db_index=True)
-    _from=models.CharField(max_length=150,unique=False)
+    first_station=models.CharField(max_length=150,unique=False)
     train_number=models.CharField(blank=True,max_length=150,unique=True)
     to=models.TextField(blank=True,db_index=False)
     date_out=models.DateTimeField(auto_now=False)
