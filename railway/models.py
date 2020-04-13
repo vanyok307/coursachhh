@@ -5,37 +5,28 @@ from time import time
 # Create your models here.
 
 
-def gen_slug(s):
-    new_slug = slugify(s,allow_unicode=True)
-    return new_slug + '-' + str(int(time()))
+class Train(models.Model):
+    name = models.CharField(max_length=20,unique=True)
 
-
-
-
-
+#головна модель, яку будемо використовувати для вього
 class Way(models.Model):
-    name=models.CharField(max_length=150,db_index=True)
-    _from=models.CharField(max_length=150,unique=False)
-    train_number=models.CharField(blank=True,max_length=150,unique=True)
-    to=models.TextField(blank=True,db_index=False)
-    date_out=models.DateTimeField(auto_now=False)
+    name=models.CharField(max_length=150,unique=True)
+    train=models.ForeignKey("Train",
+            on_delete=models.SET_DEFAULT,default=None,
+            to_field="name",null=True,blank=False)
+    stations = models.ManyToManyField("Station")
 
-"""
-    def get_absolute_url(self):
-        return reverse('post_detail', kwargs={'slug':self.slug})
+class Station(models.Model):
+    station_name=models.CharField(max_length=32,unique=True)
+    departure=models.DateTimeField(auto_now=False,blank=False)
+    arival=models.DateTimeField(auto_now=False,blank=False)
 
-    def get_edit_url(self):                         
-        return reverse('post_edit',kwargs={'slug':self.slug})
+class Ticket(models.Model):
+    number=models.CharField(max_length=20)
+    price = models.IntegerField()
+    date_purchase=models.DateTimeField(auto_now=True)
+    destination=models.ForeignKey("Way",on_delete=models.SET_DEFAULT,default=None,null=True,to_field="name",blank=False)
 
-    def get_clear_url(self):
-        return reverse('post_clear',kwargs={'slug':self.slug})
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            self.slug = gen_slug(self.title)
-        super().save(*args,**kwargs)
-        return 
-
-    def __str__(self):
-        return self.title
-"""
+    #функція для підготовки квитка до завантаження
+    def get_ticket_info_text(self):
+        pass

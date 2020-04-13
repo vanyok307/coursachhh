@@ -1,0 +1,37 @@
+{% extends 'our_template.html' %}
+
+{% block name %}
+start_page
+{% endblock %}
+
+{% block content%}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">train_number</th>
+      <th scope="col">Name</th>
+      <th scope="col">From</th>
+      <th scope="col">To</th>
+    </tr>
+    <tbody>
+<tr>
+    <th width="5%">{{ways.train.name}}</th>
+    <th width="10%">{{ways.name}}</th>
+    <th width="10%">{{ways.stations}}</th>
+    <th width="10%">{{ways.to}}</th>
+
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

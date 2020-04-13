@@ -5,11 +5,27 @@ start_page
 {% endblock %}
 
 {% block content%}
-<h1 class='mb-5'>Some header</h1>
 
-{% for post in ways.object_list %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">train_number</th>
+      <th scope="col">Name</th>
+      <th scope="col">From</th>
+      <th scope="col">To</th>
+    </tr>
+    <tbody>
+{% for object in ways %}
+<tr>
+    <th width="5%">{{object.train_number}}</th>
+    <th width="10%">{{object.name}}</th>
+    <th width="10%">{{object.first_station}}</th>
+    <th width="10%">{{object.to}}</th>
 
+</tr>
 {% endfor %}
+</tbody>
+</table>
 
 
 

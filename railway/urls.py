@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import TrainView,start_page
+from railway.views import TrainView,start_page
 
 
 urlpatterns = [
         path('',start_page,name='page1'),
-        path('rail/',TrainView.as_view(),name='railway'),
+        path('rail/<int:id>',TrainView.as_view(),name='railway'),
 ]
