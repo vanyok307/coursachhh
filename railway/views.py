@@ -5,9 +5,9 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
-from .models import Way
+from .models import Train, Way, Station, Ticket
 from .util import *
-from .forms import WayForm
+from .forms import WayForm, StationForm, TicketForm
 # Create your views here.
 
 
@@ -50,3 +50,33 @@ class TrainView(View):
             return render(request,'railway/way_page.html', context=context)
         except Way.DoesNotExist:
             return start_page(request)
+
+class WayView(View):
+    def get(self, request, id):
+        way = Way.objects.get(id=id)
+        return render(request, 'railway/way_page.html', context={'way': way})
+
+class WayCreateView(View):
+    def get(self, request):
+        waycreate = WayForm()
+        return render(request, 'railway/way_create_form.html', context={'waycreate':waycreate} )
+
+class StationView(View):
+    def get(self, request, id):
+        station = Station.objects.get(id=id)
+        return render(request, 'railway/station_page.html', context={'statiom': station})
+
+class StationCreateView(View):
+    def get(self, request):
+        stationcreate=StationForm()
+        return render(request, 'railway/station_create_form.html', context={'stationcreate':stationcreate})
+
+class TicketView(View):
+    def get(self, request, id):
+        ticket=Ticket.objects.get(id=id)
+        return render(request, 'railway/ticket_page.html', context={'ticket': ticket})
+
+class TicketCreateView(View):
+    def get(self,request):
+        ticketcreate=TicketForm()
+        return render(request, 'railway/ticket_create_form.html', context={'ticketcreate': ticketcreate } )
