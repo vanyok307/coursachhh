@@ -43,10 +43,25 @@ class TrainView(View):
 
     def get(self,request,id):
         try:
-            object = Way.objects.get(id=id)
+            object = Train.objects.get(id=id)
             context = {
-                'ways' : object,
+                    'train' : object,
                         }
-            return render(request,'railway/way_page.html', context=context)
+            return render(request,'railway/train_page.html', context=context)
         except Way.DoesNotExist:
             return start_page(request)
+
+
+class WayCreateView(View,GetMix_Create):
+    model_form= WayForm
+    template = 'railway/way_create.html'
+    def get(self, request):
+        form = WayForm()
+        return render(request,'railway/way_create.html', context={'form':form})
+
+    def post(self, request):
+        form = WayForm(request.POST)
+        if form.is_valid():
+            new_way = form.save()
+            return render(request, 'railway/way_create.html',context={'ways':new_way})
+        return render(request,'railway/way_create.html',context={'form':form})

@@ -7,6 +7,10 @@ from time import time
 
 class Train(models.Model):
     name = models.CharField(max_length=20,unique=True)
+    
+    def __str__(self):
+        return self.name
+
 
 #головна модель, яку будемо використовувати для вього
 class Way(models.Model):
@@ -20,6 +24,11 @@ class Station(models.Model):
     station_name=models.CharField(max_length=32,unique=True)
     departure=models.DateTimeField(auto_now=False,blank=False)
     arival=models.DateTimeField(auto_now=False,blank=False)
+
+    
+    def __str__(self):
+        return self.station_name
+
 
 class Ticket(models.Model):
     number=models.CharField(max_length=20)

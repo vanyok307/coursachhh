@@ -1,19 +1,23 @@
 from django import forms
-from .models import Way
+from .models import Way,Train,Station
 from django.core.exceptions import ValidationError
 
-class WayForm (forms.ModelForm):
-    name = forms.CharField(max_length=15)
-    train_number = forms.SlugField(max_length=150)
+
+
+class WayForm(forms.ModelForm):
+    train=forms.ModelChoiceField(queryset=Train.objects.all(),required=False, widget=forms.Select()),
+    stations=forms.ModelMultipleChoiceField(queryset=Station.objects.all(),required=False, widget=forms.Select()),
 
     class Meta:
         model = Way
         fields = ["name",
-                  "train_number",]
+                  "train",
+                  "stations",]
 
         widgets = {
                 'name':forms.TextInput(attrs={'class':'form-control'}),
-                'train_number':forms.TextInput(attrs={'class':'form-control'}),
+                #'train': forms.SelectMultiple(attrs={'class':'form-control'}), 
+                #'stations': forms.SelectMultiple(attrs={'class':'form-control'}),
                 }
 
         def clean_slug(self):
