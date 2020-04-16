@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from .models import Way
 from .util import *
-from .forms import WayForm
+from .forms import WayForm, StationForm, TicketForm
 # Create your views here.
 
 
@@ -51,6 +51,10 @@ class TrainView(View):
         except Way.DoesNotExist:
             return start_page(request)
 
+class WayView(View):
+    def get(self, request, id):
+        ways = Way.objects.get(id=id)
+        return render(request, 'railway/way_page.html', context={'ways': ways})
 
 class WayCreateView(View,GetMix_Create):
     model_form= WayForm
@@ -65,3 +69,91 @@ class WayCreateView(View,GetMix_Create):
             new_way = form.save()
             return render(request, 'railway/way_create.html',context={'ways':new_way})
         return render(request,'railway/way_create.html',context={'form':form})
+
+class WayEditView(View):
+     model_form = WayForm
+     template = 'railway/way_edit.html'
+
+     def get(self, request, id):
+        way = Way.objects.get(id=id)
+        form = WayForm(instance=way)
+        return render(request, 'railway/way_edit.html', context={'form': form, 'way': way})
+
+     def post(self, request, id):
+        way = Way.objects.get(id=id)
+        form = WayForm(request.POST, instance=way)
+        if form.is_valid():
+            new_way = form.save()
+            return render(request, 'railway/start_page.html')
+        return render(request, 'railway/way_edit.html', context={'form': form})
+
+class StationView(View):
+    def get(self, request, id):
+        stations = Station.objects.get(id=id)
+        return render(request, 'railway/station_page.html', context={'stations': stations})
+
+class StationCreateView(View,GetMix_Create):
+    model_form= StationForm
+    template = 'railway/station_create.html'
+    def get(self, request):
+        form = StationForm()
+        return render(request,'railway/station_create.html', context={'form':form})
+
+    def post(self, request):
+        form = StationForm(request.POST)
+        if form.is_valid():
+            new_station = form.save()
+            return render(request, 'railway/station_create.html',context={'station':new_station})
+        return render(request,'railway/station_create.html',context={'form':form})
+
+class StationEditView(View):
+    model_form = StationForm
+    template = 'railway/station_edit.html'
+
+    def get(self, request, id):
+        station = Station.objects.get(id=id)
+        form = StationForm(instance=station)
+        return render(request, 'railway/station_edit.html', context={'form': form, 'station': station})
+
+    def post(self, request, id):
+        station = Station.objects.get(id=id)
+        form = StationForm(request.POST, instance=station)
+        if form.is_valid():
+            new_station = form.save()
+            return render(request, 'railway/start_page.html')
+        return render(request, 'railway/station_edit.html', context={'form': form})
+""""
+class TicketView(View):
+    def get(self, request, id):
+        tickets=Ticket.objects.get(id=id)
+        return render(request, 'railway/ticket_page.html', context={'tickets': tickets})
+        
+        
+"""
+class TicketCreateView(View,GetMix_Create):
+    model_form= TicketForm
+    template = 'railway/ticket_create.html'
+    def get(self, request):
+        form = TicketForm()
+        return render(request,'railway/ticket_create.html', context={'form':form})
+
+    def post(self, request):
+        form = TicketForm(request.POST)
+        if form.is_valid():
+            new_ticket = form.save()
+            return render(request, 'railway/ticket_create.html',context={'ticket':new_ticket})
+        return render(request,'railway/ticket_create.html',context={'form':form})
+""""
+class TicketDeleteView(View):
+    model_form = TicketForm
+    template = 'railway/ticket_delete.html'
+
+    def get(self, request):
+        form = TicketForm()
+        return render(request, 'railway/ticket_delete.html', context={'form': form})
+
+    def post(self, request):
+        form = TicketForm(request.POST)
+        ticket_delete = form.delete()
+        return redirect(reverse, 'railway/ticket_page.html', context={'ticket': ticket_delete})
+"""

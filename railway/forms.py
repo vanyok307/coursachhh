@@ -1,5 +1,5 @@
 from django import forms
-from .models import Way,Train,Station
+from .models import Way,Train,Station, Ticket
 from django.core.exceptions import ValidationError
 
 
@@ -28,8 +28,61 @@ class WayForm(forms.ModelForm):
             if Tag.objects.filter(slug__iexact=new_slug).count():
                 raise ValidationError('This slug already extends. Please write another'.format(new_slug))
             return new_slug
-    
+
+class StationForm(forms.ModelForm):
+    station_name = forms.CharField(max_length=32),
+    departure = forms.DateTimeField(),
+    arival = forms.DateTimeField(),
+
+    class Meta:
+        model = Station
+        fields = ["station_name",
+                  "departure",
+                  "arival",]
+
+        widgets = {
+                'station_name':forms.TextInput(attrs={'class':'form-control'}),
+                'departure':forms.DateTimeInput(attrs={'class':'form-control'}),
+                'arival':forms.DateTimeInput(attrs={'class':'form-control'}),
+                }
+
+        def clean_slug(self):
+            new_slug = self.cleaned_data['slug'].lower()
+
+            if new_slug == 'create':
+                raise ValidationError('slug may not be create!!!')
+            if Tag.objects.filter(slug__iexact=new_slug).count():
+                raise ValidationError('This slug already extends. Please write another'.format(new_slug))
+            return new_slug
+
+class TicketForm(forms.ModelForm):
+    number = forms.CharField(max_length=20),
+    price = forms.IntegerField(),
+    destination = forms.ModelChoiceField(queryset=Way.objects.all(), required=False, widget=forms.Select()),
+
+    class Meta:
+        model = Ticket
+        fields = ["number",
+                  "price",
+                  "destination"]
+
+        widgets = {
+                'number':forms.TextInput(attrs={'class':'form-control'}),
+                'price':forms.NumberInput(attrs={'class':'form-control'}),
+                #'date_purchase':forms.SplitDateTimeWidget(attrs={'class':'form-control'}),
+                #'destination': forms.SplitDateTimeWidget(attrs={'class': 'form-control'}),
+                }
+
+        def clean_slug(self):
+            new_slug = self.cleaned_data['slug'].lower()
+
+            if new_slug == 'create':
+                raise ValidationError('slug may not be create!!!')
+            if Tag.objects.filter(slug__iexact=new_slug).count():
+                raise ValidationError('This slug already extends. Please write another'.format(new_slug))
+            return new_slug
 """
+
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post

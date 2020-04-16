@@ -1,0 +1,14 @@
+{% extends 'our_template.html' %}
+
+{% block content %}
+
+
+<form class="" action="{% url 'ticket_delete' %}" method="post">
+{%csrf_token%}
+
+    <h3>Are you sure you want to delete <b>"{{railway.ticket}}"</b> tag?</h3>
+    <a href="{{railway.get_absolute_url}}">Cancel</a>
+    <button type="submit" name="button" class="btn btn-danger">Delete</button>
+</form>
+
+{% endblock %}
