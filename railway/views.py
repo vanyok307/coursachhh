@@ -57,7 +57,7 @@ class WayView(View):
         ticket = Ticket.objects.get(destination=ways)
         return render(request, 'railway/way_page.html', context={'ways': ways,'ticket':ticket})
 
-class WayCreateView(View,GetMix_Create):
+class WayCreateView(View,GetMix_Create,LoginRequiredMixin):
     model_form= WayForm
     template = 'railway/way_create.html'
     def get(self, request):
@@ -93,7 +93,7 @@ class StationView(View):
         stations = Station.objects.get(id=id)
         return render(request, 'railway/station_page.html', context={'stations': stations})
 
-class StationCreateView(View,GetMix_Create):
+class StationCreateView(View,GetMix_Create,LoginRequiredMixin):
     model_form= StationForm
     template = 'railway/station_create.html'
     def get(self, request):
@@ -131,7 +131,7 @@ class TicketView(View):
         
         
 """
-class TicketCreateView(View,GetMix_Create):
+class TicketCreateView(View,GetMix_Create,LoginRequiredMixin):
     model_form= TicketForm
     template = 'railway/ticket_create.html'
     def get(self, request):

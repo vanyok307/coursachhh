@@ -6,7 +6,7 @@
 	 <link rel="stylesheet" href="{%static 'css/styles.css'%}">
 	 <title>
 		{% block title %}
-		 TEMPLATE_PAGE
+		 Залізничні квитки
 	 	{% endblock %}
 	 </title>
  
@@ -66,10 +66,8 @@ NO ANY CONTENT
 	{%block admin-panel%}
 
 	
-<div class="btn-group">	
-<button type="button" class="btn btn-info" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-Квитки
-</button>
+<div class="aligin-center">
+<a href="{%url 'ticket_create'%}" class="btn btn-outline-info">Квитки</a>
 <div class="dropdown-menu">
 	</div>
 </div>

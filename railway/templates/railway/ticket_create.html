@@ -5,23 +5,135 @@
 
 <form class="" action="{% url 'ticket_create' %}" method="post">
 {%csrf_token%}
-
-
-{%for field in form %}
 <div class="form-group">
     <div class="col">
-	{%if field.errors%}
+	{%if form.errors%}
 	<div class="alert alert-danger">
-		{{field.errors}}
+		{{form.errors}}
 	</div>
 	{%endif%}
- 
-	{{field.label}}
-    
-	{{field}}
+ <p>Номер квитка</p>
+	{{form.number}}
+
 </div>
 </div>
-{%endfor%}
+
+<div class="form-group">
+    <div class="col">
+	{%if form.errors%}
+	<div class="alert alert-danger">
+			{{form.errors}}
+	</div>
+	{%endif%}
+		<p>Ціна</p>
+		{{form.price}}
+
+</div>
+</div>
+
+<div class="form-group">
+    <div class="col">
+	{%if form.errors%}
+	<div class="alert alert-danger">
+				{{form.errors}}
+	</div>
+	{%endif%}
+		<p>Дата відравплення</p>
+		{{form.date_purchase}}
+
+</div>
+</div>
+
+<div class="form-group">
+    <div class="col">
+	{%if form.errors%}
+	<div class="alert alert-danger">
+				{{form.errors}}
+	</div>
+	{%endif%}
+		<p>Кінцева станція</p>
+		{{form.destination}}
+
+</div>
+</div>
+
+<div class="form-group">
+    <div class="col">
+	{%if form.errors%}
+	<div class="alert alert-danger">
+				{{form.errors}}
+	</div>
+	{%endif%}
+		<p>Тип вагону</p>
+		{{form.place_type}}
+
+</div>
+</div>
+
+<div class="form-group">
+    <div class="col">
+	{%if form.errors%}
+	<div class="alert alert-danger">
+		{{form.errors}}
+	</div>
+	{%endif%}
+ 	<p>Дата прибуття</p>
+	{{form.first}}
+
+</div>
+</div>
+
+<div class="form-group">
+    <div class="col">
+	{%if form.errors%}
+	<div class="alert alert-danger">
+		{{form.errors}}
+	</div>
+	{%endif%}
+ 	<p>Номер вагону</p>
+	{{form.carriage}}
+
+</div>
+</div>
+
+<div class="form-group">
+    <div class="col">
+	{%if form.errors%}
+	<div class="alert alert-danger">
+		{{form.errors}}
+	</div>
+	{%endif%}
+ 	<p>Послуги</p>
+	{{form.service}}
+
+</div>
+</div>
+
+<div class="form-group">
+    <div class="col">
+	{%if form.errors%}
+	<div class="alert alert-danger">
+		{{form.errors}}
+	</div>
+	{%endif%}
+ 		<p>Номер місця</p>
+	{{form.number_of_place}}
+
+</div>
+</div>
+
+<div class="form-group">
+    <div class="col">
+	{%if form.errors%}
+	<div class="alert alert-danger">
+		{{form.errors}}
+	</div>
+	{%endif%}
+ 		<p>Тип квитка</p>
+	{{form.type_of_ticket}}
+
+</div>
+</div>
 
 </form>
 <button type="submit" class="btn btn-primary">Create</button>

@@ -1,8 +1,9 @@
 from django import forms
-from .models import Way,Train,Station, Ticket
+from .models import Way,Train,Station, Ticket, TICKET_SERVICES_CHOICES, TICKET_TYPE_CHOICES
 from django.core.exceptions import ValidationError
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
+
 
 
 class WayForm(forms.ModelForm):
@@ -57,15 +58,15 @@ class StationForm(forms.ModelForm):
             return new_slug
 
 class TicketForm(forms.ModelForm):
-    number = forms.CharField(max_length=20),
-    price = forms.IntegerField(),
-    destination = forms.ModelChoiceField(queryset=Way.objects.all(), required=False, widget=forms.Select()),
+    number = forms.CharField(max_length=20)
+    price = forms.IntegerField()
+    destination = forms.ModelChoiceField(queryset=Way.objects.all(), required=False, widget=forms.Select())
     date_purchase = forms.DateField(widget = forms.SelectDateWidget())
     first = forms.DateField(widget = forms.SelectDateWidget())
     carriage = forms.CharField(max_length=20)
-    service = forms.CharField(max_length=20)
+    service = forms.ChoiceField(choices=TICKET_SERVICES_CHOICES)
     number_of_place = forms.IntegerField()
-    type_of_ticket = forms.CharField(max_length=20)
+    type_of_ticket = forms.ChoiceField(choices=TICKET_TYPE_CHOICES)
     place_type = forms.CharField(max_length=20)
     
 
@@ -73,7 +74,14 @@ class TicketForm(forms.ModelForm):
         model = Ticket
         fields = ["number",
                   "price",
-                  "destination"]
+                  "destination",
+                  "date_purchase",
+                  "first",
+                  "carriage",
+                  "service",
+                  "number_of_place",
+                  "type_of_ticket",
+                  "place_type"]
 
         widgets = {
                 'number':forms.TextInput(attrs={'class':'form-control'}),
