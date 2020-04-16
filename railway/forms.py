@@ -1,7 +1,8 @@
 from django import forms
 from .models import Way,Train,Station, Ticket
 from django.core.exceptions import ValidationError
-
+from django.contrib.admin.widgets import AdminDateWidget
+from django.forms.fields import DateField
 
 
 class WayForm(forms.ModelForm):
@@ -59,6 +60,14 @@ class TicketForm(forms.ModelForm):
     number = forms.CharField(max_length=20),
     price = forms.IntegerField(),
     destination = forms.ModelChoiceField(queryset=Way.objects.all(), required=False, widget=forms.Select()),
+    date_purchase = forms.DateField(widget = forms.SelectDateWidget())
+    first = forms.DateField(widget = forms.SelectDateWidget())
+    carriage = forms.CharField(max_length=20)
+    service = forms.CharField(max_length=20)
+    number_of_place = forms.IntegerField()
+    type_of_ticket = forms.CharField(max_length=20)
+    place_type = forms.CharField(max_length=20)
+    
 
     class Meta:
         model = Ticket
@@ -69,8 +78,6 @@ class TicketForm(forms.ModelForm):
         widgets = {
                 'number':forms.TextInput(attrs={'class':'form-control'}),
                 'price':forms.NumberInput(attrs={'class':'form-control'}),
-                #'date_purchase':forms.SplitDateTimeWidget(attrs={'class':'form-control'}),
-                #'destination': forms.SplitDateTimeWidget(attrs={'class': 'form-control'}),
                 }
 
         def clean_slug(self):
@@ -81,25 +88,3 @@ class TicketForm(forms.ModelForm):
             if Tag.objects.filter(slug__iexact=new_slug).count():
                 raise ValidationError('This slug already extends. Please write another'.format(new_slug))
             return new_slug
-"""
-
-class PostForm(forms.ModelForm):
-    class Meta:
-        model = Post
-        fields = ['title','slug','body','tags']
-
-        widgets = {
-                'title':forms.TextInput(attrs={'class':'form-control'}), 
-                'slug':forms.TextInput({'class':'form-control'}),
-                'body':forms.Textarea({'class':'form-control'}),
-                'tags':forms.SelectMultiple({'class':'form-control'})
-                }
-
-        def clean_slug(self):
-            new_slug = self.cleaned_data['slug'].lower()
-           
-            if new_slug == 'create':
-                raise ValidationError('slug may not be create!')
-            return new_slug
-
-"""

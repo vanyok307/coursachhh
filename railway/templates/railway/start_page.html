@@ -9,19 +9,15 @@ start_page
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">train_number</th>
-      <th scope="col">Name</th>
-      <th scope="col">From</th>
-      <th scope="col">To</th>
+      <th scope="col">Шлях</th>
+      <th scope="col">Cтанції</th>
     </tr>
     <tbody>
 {% for object in ways %}
 <tr>
-    <th width="5%">{{object.train_number}}</th>
-    <th width="10%">{{object.name}}</th>
-    <th width="10%">{{object.first_station}}</th>
-    <th width="10%">{{object.to}}</th>
-
+    <th width="10%"><a href="{% url 'ways' id=object.id %}">{{object.name}}</a></th>
+    <th width="10%">{{object.stations.all|join:"-"}}</th> 
+ 
 </tr>
 {% endfor %}
 </tbody>

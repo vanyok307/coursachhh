@@ -9,31 +9,29 @@
 		 TEMPLATE_PAGE
 	 	{% endblock %}
 	 </title>
+ 
  </head>
 	<body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#">Продаж залізничних квитків</a>
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-	      <a class="nav-link" href="{% url 'page1' %}">PAGE1<span class="sr-only">(current)</span></a>
+    <ul class="nav nav-tabs">
+      <li class="nav-item dropdown">
+	      <a class="nav-link" href="{% url 'page1' %}">Головна<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-	      <a class="nav-link" href="#">Tags</a>
-      </li>
+          <a class="nav-link" href="{% url 'way_create'  %}">Замовити квитки</a>
+      </li> 
       <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-      </li>
+          <a class="nav-link" href="{% url 'admin_panel'  %}">Працівникам</a>
+      </li> 
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   </div>
+  <a class="navbar-brand" href="#">Продаж залізничних квитків</a>
 </nav>
 
 {% block content %}
@@ -43,7 +41,7 @@ NO ANY CONTENT
 
 <nav aria-label="Page navigation example">
   <ul class="pagination">
-	  <li class="page-item {% if not prev_url %}disabled{%endif%}"><a class="page-link" href="{{prev_url}}">Previous</a></li>
+	  <li class="page-item {% if not prev_url %}disabled{%endif%}"><a class="page-link" href="{{prev_url}}"><-</a></li>
 {%for n in posts.paginator.page_range%}
 {% if posts.number == n %}	
 	<li class="page-item active">
@@ -56,27 +54,26 @@ NO ANY CONTENT
 {%endif%}
 {%endfor%}
 	    
-<li class="page-item {% if not next_url %}disabled{%endif%}"><a class="page-link" href="{{next_url}}">Next</a></li>
+<li class="page-item {% if not next_url %}disabled{%endif%}"><a class="page-link" href="{{next_url}}">-></a></li>
   </ul>
 </nav>
 {%endif%}
 {%if request.user.is_authenticated and request.user.is_staff%}
 
 <div class="admin-panel aligin-center">
-	<a href="/admin" class="btn btn-outline-info">Admin</a>
+    <p style="color:white">Панель Касира</p>
+	<a href="/admin" class="btn btn-outline-info">Перейти до панелі адміна</a>
 	{%block admin-panel%}
 
 	
 <div class="btn-group">	
-<button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-Create
+<button type="button" class="btn btn-info" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+Квитки
 </button>
 <div class="dropdown-menu">
 	</div>
 </div>
 
-	<a href="{{admin_object.get_edit_url}}" class="btn btn-dark edit"style="{%if detail%}display: block;{%endif%}">Edit</a> 
-	<a href="{{admin_object.get_clear_url}}" class="btn btn-danger delete"style="{%if detail%}display: block;{%endif%}">Delete</a> 
 	{%endblock%}
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

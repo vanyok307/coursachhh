@@ -3,31 +3,49 @@
 {% block name %}
 start_page
 {% endblock %}
-
 {% block content%}
-
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">train_number</th>
-      <th scope="col">Name</th>
-      <th scope="col">From</th>
-      <th scope="col">To</th>
+<h1 align="center">{{ways.name}}</h1>
+<table class="table" width="600">
+    <tbody align="left">
+    <tr style="width:20%">
+        <th scope="col"><li>Номер поїзду</li></th>
     </tr>
-    <tbody>
 <tr>
-    <th width="5%">{{ways.train}}</th>
-    <th width="10%">{{ways.name}}</th>
-    <th width="10%">{{ways.stations}}</th>
-    <th width="10%">{{ways.to}}</th>
-
+    <th scope="col">{{ways.train}}</th>
 </tr>
-</tbody>
+<th>
+    <li>Станції</li>
+</th>
+<tr>
+    <th scope="col">{{ways.stations.all|join:"-"}}</th>
+</tr>
+<tr>
+</tr>
+    </tbody>
 </table>
+</div>
 
-
-
-
+<div class="container">
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Показати квиток</a>
+</p>
+<div class="row">
+  <div class="col">
+    <div class="collapse multi-collapse" id="multiCollapseExample1">
+        <h1>{{way.name}}</h1>
+        <p>Номер квитка: {{ticket.number}}</p>
+        <p>Тип квитка: {{ticket.type_of_ticket}}</p>
+        <p>Тип вагону: {{ticket.place_type}}</p>
+        <p>Номер вагону: {{ticket.carriage}}</p>
+        <p>Місце: {{ticket.number_of_place}}</p>
+        <p>Послуги: {{ticket.service}}</p>
+        <p>Дата відправки: {{ticket.date_purchase}}</p>
+        <p>Дата прибуття: {{ticket.first}}</p>
+        <p align="right">Ціна: {{ticket.price}} грн</p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" align="right" aria-controls="multiCollapseExample1">Придбати квиток</a>
+    </div>
+  </div>
+  </div>
 
 
 

@@ -37,7 +37,7 @@ def start_page(request):
     return render(request,'railway/start_page.html', context= context)
 
 class TrainView(View):
-    model = Way
+    model = Train
     template = 'railway/post_create_form.html'
     raise_exception=True
 
@@ -48,13 +48,14 @@ class TrainView(View):
                     'train' : object,
                         }
             return render(request,'railway/train_page.html', context=context)
-        except Way.DoesNotExist:
+        except Train.DoesNotExist:
             return start_page(request)
 
 class WayView(View):
     def get(self, request, id):
         ways = Way.objects.get(id=id)
-        return render(request, 'railway/way_page.html', context={'ways': ways})
+        ticket = Ticket.objects.get(destination=ways)
+        return render(request, 'railway/way_page.html', context={'ways': ways,'ticket':ticket})
 
 class WayCreateView(View,GetMix_Create):
     model_form= WayForm
