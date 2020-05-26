@@ -5,21 +5,20 @@ from time import time
 # Create your models here.
 
 TICKET_PLACE_CHOICES = [
-    ('Зг', 'Загальний'),
-    ('Пк', 'Плацкартний'),
-    ('Кп', 'Купейний'),
+    ('Загальний', 'Загальний'),
+    ('Плацкартний', 'Плацкартний'),
+    ('Купейний', 'Купейний'),
     ('Св', 'СВ'),
-    ('Лк', 'Люкс'),
-    ('Св', 'СВ'),
+    ('Люкс', 'Люкс'),
 ]
 
 TICKET_SERVICES_CHOICES = [
     (' ', ' '),
-    ('Пб', 'Постільна білизна'),
-    ('Вд', 'Вода'),
-    ('Гн', 'Гарячі напої'),
+    ('Постільна білизна', 'Постільна білизна'),
+    ('Вода', 'Вода'),
+    ('Гарячі напої', 'Гарячі напої'),
 ]
-
+""""
 TICKET_CARRIAGE_CHOICES = [
     ('1', '1'),
     ('2', '2'),
@@ -50,11 +49,11 @@ TICKET_TYPE_OF_TICKET_CHOICES = [
     ('33', '33'),('34', '34'),('35', '35'),('36', '36'),
     ('37', '37'),('38', '38'),('39', '39'),('40', '40')
 ]
-
+"""
 TICKET_TYPE_CHOICES = [
-    ('Ст', 'Студентський квиток'),
-    ('Пл', 'Пільговий'),
-    ('Пв', 'Повний'),
+    ('Студентський квиток', 'Студентський квиток'),
+    ('Пільговий', 'Пільговий'),
+    ('Повний', 'Повний'),
 ]
 
 
@@ -94,9 +93,9 @@ class Ticket(models.Model):
     destination=models.ForeignKey("Way",on_delete=models.SET_DEFAULT,default=None,null=True,to_field="name",blank=False,verbose_name="Кінцева станція")
     place_type=models.CharField(max_length=20,verbose_name="Тип вагону", choices=TICKET_PLACE_CHOICES)
     first=models.DateTimeField(default=None,auto_now=False,verbose_name="Дата прибуття")
-    carriage=models.IntegerField(default=None,verbose_name="Номер вагону", choices=TICKET_CARRIAGE_CHOICES)
+    carriage=models.IntegerField(default=None,verbose_name="Номер вагону")
     service=models.CharField(max_length=20,default=None,verbose_name="Послуги", choices=TICKET_SERVICES_CHOICES)
-    number_of_place=models.IntegerField(default=None,verbose_name="Номер місця", choices=TICKET_TYPE_OF_TICKET_CHOICES)
+    number_of_place=models.IntegerField(default=None,verbose_name="Номер місця")
     type_of_ticket=models.CharField(max_length=20,verbose_name="Тип квитка", choices=TICKET_TYPE_CHOICES)
 
     def __str__(self):

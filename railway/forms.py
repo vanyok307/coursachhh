@@ -1,5 +1,5 @@
 from django import forms
-from .models import Way,Train,Station, Ticket, TICKET_SERVICES_CHOICES, TICKET_TYPE_CHOICES, TICKET_PLACE_CHOICES, TICKET_CARRIAGE_CHOICES, TICKET_TYPE_OF_TICKET_CHOICES
+from .models import Way,Train,Station, Ticket, TICKET_SERVICES_CHOICES, TICKET_TYPE_CHOICES, TICKET_PLACE_CHOICES
 from django.core.exceptions import ValidationError
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
@@ -63,9 +63,9 @@ class TicketForm(forms.ModelForm):
     destination = forms.ModelChoiceField(queryset=Way.objects.all(), required=False, widget=forms.Select())
     date_purchase = forms.DateField(widget = forms.SelectDateWidget())
     first = forms.DateField(widget = forms.SelectDateWidget())
-    carriage = forms.ChoiceField(choices=TICKET_CARRIAGE_CHOICES)
+    carriage = forms.IntegerField()
     service = forms.ChoiceField(choices=TICKET_SERVICES_CHOICES)
-    number_of_place = forms.ChoiceField(choices=TICKET_TYPE_OF_TICKET_CHOICES)
+    number_of_place = forms.IntegerField()
     type_of_ticket = forms.ChoiceField(choices=TICKET_TYPE_CHOICES)
     place_type = forms.ChoiceField(choices=TICKET_PLACE_CHOICES)
     
