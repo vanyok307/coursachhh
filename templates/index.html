@@ -1,0 +1,110 @@
+{%load static%}
+
+<html>
+    <head>
+	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	 <title>
+		{% block title %}
+		 Головна
+	 	{% endblock %}
+	 </title>
+ 
+    </head>
+	<body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <a class="navbar-brand" href="#">Продаж залізничних квитків</a>
+<ul class="nav nav-tabs">
+    <li class="nav-item dropdown">
+	    <a class="nav-link" href="{% url 'page1' %}">Головна<span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'admin_panel'  %}">Працівникам</a>
+    </li> 
+</ul>
+    </form>
+  </div>
+
+<div class="col-4 d-flex justify-content-end align-items-center">
+    <a class="btn btn-sm btn-outline-secondary" href="#">Увійти</a>
+          </div>
+</nav>
+
+</header>
+<section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">УкрЗалізТранспорт</h1>
+          <p class="lead text-muted">МИ ПОЄДНУЄМО ЯКІСТЬ ПЕРЕВЕЗЕННЯ ТА ЙОГО ВАРТІСТЬ ДЛЯ ВАС</p>
+          <p>
+          <a href="{% url 'tickets' %}" class="btn btn-primary my-2">Замовити квиток</a>
+            <a href="{% url 'way_list' %}" class="btn btn-secondary my-2">Перелік шляхів</a>
+          </p>
+        </div>
+      </section>
+
+<div class="album py-5 bg-light">
+        <div class="container">
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" src="https://image.shutterstock.com/image-photo/istanbul-turkey-28-november-2016-260nw-524947594.jpg" data-holder-rendered="true">
+                <div class="card-body">
+                  <p class="card-text">Квитки на поїзди пасажири зможуть придбати за 90 днів до дати відправлення</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href="https://www.uz.gov.ua/press_center/up_to_date_topic/519371/">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Переглянути</button>
+                        </a>
+                    </div>
+                    <small class="text-muted">27.05.2020</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" src="https://static.ukrinform.com/photos/2020_01/thumb_files/630_360_1579847418-528.jpg" data-holder-rendered="true">
+                <div class="card-body">
+                  <p class="card-text">Укрзалізниця відкрила продаж квитків ще на 9 поїздів далекого сполучення</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href="https://www.uz.gov.ua/press_center/up_to_date_topic/519323/">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Переглянути</button>
+                        </a>
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" src="https://standox.com.ua/775-thickbox_default/3m-specializirovannyj-raspirator-s-klapanom-zashhita-ffp2-ot-svarochnykh-parov.jpg" data-holder-rendered="true">
+                <div class="card-body">
+                  <p class="card-text">Пасажирська компанія купує респіратори за цінами значно нижчими від роздрібних та відповідно до чинного законодавства</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <a href="https://www.uz.gov.ua/press_center/up_to_date_topic/page-3/519170/">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Переглянути</button>
+                        </a>
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+      </div>
+
+	</body>
+    <footer class="blog-footer">
+      <p>Сироватка Іван, група 317 CK для предмету "Технологія створення програмних продуктів"</p>
+      <p>
+        @2020
+      </p>
+    </footer>
+</html>

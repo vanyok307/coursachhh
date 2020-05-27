@@ -70,14 +70,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'wsgi.application'
 
-
+TEMPLATE_DIRS = (
+    os.path.join(os.path.dirname(__file__), 'templates'),
+)
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'study_db',
+        'USER': 'root',
+        'HOST': '127.0.0.1',
+        'PASSWORD': 'rootpass',
+        'PORT': '3306',
     }
 }
 
@@ -119,8 +124,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "railway")
 
-STATICFILES_DIRS=[
-        os.path.join(BASE_DIR,'static')
-
-        ]

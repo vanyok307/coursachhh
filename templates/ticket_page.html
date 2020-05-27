@@ -1,0 +1,41 @@
+
+{% extends 'our_template.html' %}
+{% block title %}
+Список наявних квитків
+{% endblock %}
+{% block name %}
+start_page
+{% endblock %}
+
+{% block content%}
+
+<div class="album py-1 bg-light">
+
+<div class="container">
+    <div class="row">
+{% for ticket in tickets %}
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" src="https://i.pinimg.com/originals/84/65/ae/8465aebbd4c3ffff1e391d43928ccef0.jpg" data-holder-rendered="true">
+                <div class="card-body">
+                <strong class="d-inline-block mb-2 text-primary">Квиток до {{ticket.destination}}</strong>
+                <div class="mb-1 text-muted">Дата відправки: {{ticket.date_purchase}}</div>
+                  <p class="card-text">Станції, через які курсує потяг:{{ticket.destination}}</p>
+                  <p class="card-text mb-auto">Ціна:{{ticket.price}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Придбати</button>
+                      <a href="{% url 'ticket_filter' destination=ticket.destination %}">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Переглянути наявні місця</button>
+                    </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+{% endfor %}
+    </div>
+</div>
+</div>
+
+{% endblock %}
