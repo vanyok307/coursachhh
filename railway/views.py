@@ -1,3 +1,6 @@
+import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import View
@@ -122,5 +125,16 @@ class TicketFilterView(View):
     def get(self, request, destination):
         tickets=Ticket.objects.all().filter(destination=destination)
         return render(request, 'ticket_page.html', context={'tickets': tickets})
+
+def download(request, destination):
+    buffer = io.BytesIO()
+    p = canvas.Canvas(buffer)
+    p.drawString(100, 100, "Тест.")
+    p.showPage()
+    p.save()
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename='квиток.pdf')
+
+
         
         

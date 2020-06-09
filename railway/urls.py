@@ -4,7 +4,7 @@ from railway.views import (TrainView,WaysView,
                            logout_view)
 from railway.views import (TrainView,start_page,
                            WayCreateView,StationCreateView, 
-                           TicketsView,TicketFilterView)
+                           TicketsView,TicketFilterView, download)
 
 from railway.views import WayEditView,StationEditView
 from django.views.generic.base import RedirectView
@@ -24,4 +24,5 @@ urlpatterns = [
         path('station/<int:id>/update/',StationEditView.as_view(),name='station_update'),
         path('ticket/',TicketsView.as_view(),name='tickets'),
         path('ticket/<str:destination>/',TicketFilterView.as_view(),name='ticket_filter'),
+        path('download/<str:destination>/', download, name="download"),
         ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

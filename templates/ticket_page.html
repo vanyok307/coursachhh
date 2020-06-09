@@ -21,11 +21,14 @@ start_page
                 <strong class="d-inline-block mb-2 text-primary">Квиток до {{ticket.destination}}</strong>
                 <div class="mb-1 text-muted">Дата відправки: {{ticket.date_purchase}}</div>
                   <p class="card-text">Станції, через які курсує потяг:{{ticket.destination}}</p>
+                  <class class="d-inline-block mb-2 text-primary">Тип квитка {{ticket.type_of_ticket}}</class>
                   <p class="card-text mb-auto">Ціна:{{ticket.price}}</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
+                      <a href="{% url 'download' destination=ticket.destination %}">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Придбати</button>
-                      <a href="{% url 'ticket_filter' destination=ticket.destination %}">
+                      </a>
+                        <a href="{% url 'ticket_filter' destination=ticket.destination %}">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Переглянути наявні місця</button>
                     </a>
                     </div>
