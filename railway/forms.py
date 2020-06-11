@@ -1,9 +1,18 @@
 from django import forms
 from .models import Way,Train,Station, Ticket, TICKET_SERVICES_CHOICES, TICKET_TYPE_CHOICES, TICKET_PLACE_CHOICES
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 from django.contrib.admin.widgets import AdminDateWidget
 from django.forms.fields import DateField
 
+class UserForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ["email",
+                  "first_name",
+                  "last_name",
+                  "password"]
 
 
 class WayForm(forms.ModelForm):

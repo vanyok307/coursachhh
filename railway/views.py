@@ -6,14 +6,57 @@ from django.http import HttpResponse
 from django.views.generic import View
 from django.shortcuts import redirect
 from django.urls import reverse
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
+from django.contrib.auth import login,authenticate
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import logout
+from django.views.decorators.csrf import csrf_exempt
+from django.template.context_processors import csrf
 from .models import Way
 from .util import *
-from .forms import WayForm, StationForm, TicketForm
-# Create your views here.
+from .forms import WayForm, StationForm, TicketForm, UserForm
 
+
+class UserRegView(View):
+    model = User
+    
+    @csrf_exempt
+    def get(self, request):
+        form = UserCreationForm()
+        return render(request, 'user_reg.html',{'form':form})
+    @csrf_exempt
+    def post(self, request):
+        form = UserCreationForm(request.POST)
+        username = request.POST.get('email')
+        raw_password = request.POST.get('password')
+        user = authenticate(username=username, password=raw_password)
+        login(request, user)
+        return render(request,'index.html')
+
+class UserView(View):
+    model = User
+    
+    @csrf_exempt
+    def get(self, request):
+        form = UserForm()
+        return render(request, 'user_log.html',{'form':form})
+    
+    @csrf_exempt
+    def post(self, request):
+        form = UserForm(request.POST)
+        
+        if User.objects.get(username=request.POST.get('email')):
+            username = request.POST.get('email')
+            raw_password = request.POST.get('password')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return render(request, 'index.html')
+        return render(request,'user_log.html',context={'form':form})
+
+def user_view(request):
+    return render(request,'user.html')
 
 def logout_view(request):
     logout(request)
@@ -124,6 +167,13 @@ class TicketsView(View):
 class TicketFilterView(View):
     def get(self, request, destination):
         tickets=Ticket.objects.all().filter(destination=destination)
+        return render(request, 'ticket_page.html', context={'tickets': tickets})
+
+class TicketFilterStationView(View):
+    def get(self, request, id):
+        way=Way.objects.get(id=id)
+        station = Way.stations.filter()
+        tickets = Ticket.objects.filter()
         return render(request, 'ticket_page.html', context={'tickets': tickets})
 
 def download(request, destination):

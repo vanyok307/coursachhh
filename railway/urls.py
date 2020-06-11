@@ -4,7 +4,9 @@ from railway.views import (TrainView,WaysView,
                            logout_view)
 from railway.views import (TrainView,start_page,
                            WayCreateView,StationCreateView, 
-                           TicketsView,TicketFilterView, download)
+                           TicketsView,TicketFilterView, 
+                           download, UserView,UserRegView,
+                           TicketFilterStationView)
 
 from railway.views import WayEditView,StationEditView
 from django.views.generic.base import RedirectView
@@ -13,6 +15,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
         path('',start_page,name='page1'),
+        path('login/', UserView.as_view(), name="user_log"),
+        path('signup/', UserRegView.as_view(), name="user_reg"),
+        path('redirect_to_sign_up/', RedirectView.as_view(url="/signup/"),name="sign"),
         path('admin/', RedirectView.as_view(url='/admin'), name="admin_panel"),
         path('logout/', logout_view, name="logout"),
         path('train/<int:id>/',TrainView.as_view(),name='railway'),
@@ -23,6 +28,7 @@ urlpatterns = [
         path('station/<int:id>/',StationView.as_view(), name='stations'),
         path('station/<int:id>/update/',StationEditView.as_view(),name='station_update'),
         path('ticket/',TicketsView.as_view(),name='tickets'),
+        path('ticket/<int:id>/',TicketFilterStationView.as_view(),name='ticket_filter_station'),
         path('ticket/<str:destination>/',TicketFilterView.as_view(),name='ticket_filter'),
         path('download/<str:destination>/', download, name="download"),
-        ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+        ]
