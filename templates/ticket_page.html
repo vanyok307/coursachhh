@@ -8,6 +8,35 @@ start_page
 {% endblock %}
 
 {% block content%}
+<style>
+.alert {
+  padding: 20px;
+  background-color: #ff9800;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+</style>
+                    {% if request.user.is_authenticated %}
+                    {% else %}
+                    <div class="alert">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+                        <strong>Увага!</strong> Для того щоб здійснити купівлю квитка, потрібно бути авторизованим!!!
+                    </div>
+                        {% endif %}
 
 <div class="album py-1 bg-light">
 
@@ -25,9 +54,11 @@ start_page
                   <p class="card-text mb-auto">Ціна:{{ticket.price}}</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <a href="{% url 'download' destination=ticket.destination %}">
+                    {% if request.user.is_authenticated %}
+                      <a href="{% url 'download' id=ticket.id %}">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Придбати</button>
                       </a>
+                    {% endif %}
                         <a href="{% url 'ticket_filter' destination=ticket.destination %}">
                       <button type="button" class="btn btn-sm btn-outline-secondary">Переглянути наявні місця</button>
                     </a>

@@ -1,4 +1,6 @@
 import io
+import csv
+import datetime
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
 from django.shortcuts import render
@@ -176,15 +178,21 @@ class TicketFilterStationView(View):
         tickets = Ticket.objects.filter()
         return render(request, 'ticket_page.html', context={'tickets': tickets})
 
-def download(request, destination):
-    buffer = io.BytesIO()
-    p = canvas.Canvas(buffer)
-    p.drawString(100, 100, "Тест.")
-    p.showPage()
-    p.save()
-    buffer.seek(0)
-    return FileResponse(buffer, as_attachment=True, filename='квиток.pdf')
-
+def download(request, id):
+    ticket=Ticket.objects.get(id=id)
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = "attachment;filename=ticket.csv"
+    writer = csv.writer(response)
+    writer.writerow(["====================================================================="])
+    writer.writerow(["Квиток №"+str(ticket.id)])
+    writer.writerow(["Власник:",    request.user.username])
+    writer.writerow(["Дата відправки",  ticket.date_purchase])
+    writer.writerow(["Станції, через які курсує потяг:",    ticket.destination])
+    writer.writerow(["Тип Квитка",   ticket.type_of_ticket])
+    writer.writerow(["Ціна квитка:",     ticket.price])
+    writer.writerow(["Дата купівлі:",    datetime.datetime.now().strftime("%Y-%m-%d-%H.%M.%S")])
+    writer.writerow(["====================================================================="])
+    return response
 
         
         

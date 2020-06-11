@@ -28,7 +28,6 @@ urlpatterns = [
         path('station/<int:id>/',StationView.as_view(), name='stations'),
         path('station/<int:id>/update/',StationEditView.as_view(),name='station_update'),
         path('ticket/',TicketsView.as_view(),name='tickets'),
-        path('ticket/<int:id>/',TicketFilterStationView.as_view(),name='ticket_filter_station'),
         path('ticket/<str:destination>/',TicketFilterView.as_view(),name='ticket_filter'),
-        path('download/<str:destination>/', download, name="download"),
+        path('download/<str:id>/', download, name="download"),
         ]
